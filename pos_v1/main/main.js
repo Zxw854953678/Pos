@@ -1,3 +1,29 @@
 'use strict';
 
-//TODO: 请在该文件中实现练习要求并删除此注释
+function printReceipt(inputs) {
+  let Items = buildItems(inputs);
+  console.log(Items);
+}
+
+function buildItems(barcodes) {
+  let items = [];
+
+  for (let bar of barcodes) {
+    const splitBarcode = bar.split('-');
+    const barcode = splitBarcode[0];
+    const count = parseFloat((splitBarcode[1]) || 1);
+
+    const exitItem = items.find(item=>item.itemInfo.barcode === barcode);
+    if (exitItem) {
+      exitItem.count += count;
+    }
+    else {
+      const allItems = loadAllItems();
+      const item = allItems.find(aItem=>aItem.barcode === barcode);
+      items.push({itemInfo: item, count: count});
+    }
+  }
+
+  return items;
+}
+

@@ -47,7 +47,7 @@ describe('pos', () => {
       });
 
       it('print items2', () => {
-        let items = buildItems(inputs);
+        let items = buildItems(tags);
 
         const expectItems = [
           {
