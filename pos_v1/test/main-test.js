@@ -21,25 +21,26 @@ describe('pos', () => {
       });
 
       it('print items1', () => {
-        let items = buildItems(['ITEM000001','ITEM000001-2','ITEM000005']);
+        let items = buildItems(['ITEM000001', 'ITEM000001-2', 'ITEM000005']);
 
         const expectItems = [
           {
-            itemInfo:{
+            itemInfo: {
               barcode: 'ITEM000001',
               name: '雪碧',
               unit: '瓶',
-              price: 3.00},
-            count:3
+              price: 3.00
+            },
+            count: 3
           },
           {
-            itemInfo:{
+            itemInfo: {
               barcode: 'ITEM000005',
               name: '方便面',
               unit: '袋',
               price: 4.50
             },
-            count:1
+            count: 1
           }
         ];
 
@@ -51,34 +52,114 @@ describe('pos', () => {
 
         const expectItems = [
           {
-            itemInfo:{
+            itemInfo: {
               barcode: 'ITEM000001',
               name: '雪碧',
               unit: '瓶',
-              price: 3.00},
-            count:5
+              price: 3.00
+            },
+            count: 5
           },
           {
-            itemInfo:{
+            itemInfo: {
               barcode: 'ITEM000003',
               name: '荔枝',
               unit: '斤',
               price: 15.00
             },
-            count:2
+            count: 2
           },
           {
-            itemInfo:{
+            itemInfo: {
               barcode: 'ITEM000005',
               name: '方便面',
               unit: '袋',
               price: 4.50
             },
-            count:3
+            count: 3
           }
         ];
 
         expect(items).toEqual(expectItems);
+      });
+    });
+
+    describe('test : subtotalItem function', ()=> {
+      let items;
+
+      beforeEach(()=>{
+        items=[
+          {
+            itemInfo: {
+              barcode: 'ITEM000001',
+              name: '雪碧',
+              unit: '瓶',
+              price: 3.00
+            },
+            count: 5
+          },
+          {
+            itemInfo: {
+              barcode: 'ITEM000003',
+              name: '荔枝',
+              unit: '斤',
+              price: 15.00
+            },
+            count: 2
+          },
+          {
+            itemInfo: {
+              barcode: 'ITEM000005',
+              name: '方便面',
+              unit: '袋',
+              price: 4.50
+            },
+            count: 3
+          }
+        ]
+      });
+
+      it('print cartItems',()=>{
+        let cartItems = subtotalItem(items);
+
+        const expectCartItems = {
+          itemsReceipt:[
+            {
+              itemInfo: {
+                barcode: 'ITEM000001',
+                name: '雪碧',
+                unit: '瓶',
+                price: 3.00
+              },
+              count: 5,
+              save:3.00
+            },
+            {
+              itemInfo: {
+                barcode: 'ITEM000003',
+                name: '荔枝',
+                unit: '斤',
+                price: 15.00
+              },
+              count: 2,
+              save:0
+            },
+            {
+              itemInfo: {
+                barcode: 'ITEM000005',
+                name: '方便面',
+                unit: '袋',
+                price: 4.50
+              },
+              count: 3,
+              save:4.50
+            }
+          ],
+          total:51.00,
+          saveTotal:7.5
+        };
+
+        expect(cartItems).toEqual(expectCartItems);
       });
     });
   });

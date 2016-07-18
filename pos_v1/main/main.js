@@ -1,10 +1,5 @@
 'use strict';
 
-function printReceipt(inputs) {
-  let Items = buildItems(inputs);
-  console.log(Items);
-}
-
 function buildItems(barcodes) {
   let items = [];
 
