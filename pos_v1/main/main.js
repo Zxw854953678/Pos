@@ -46,5 +46,24 @@ function subtotalItem(items) {
   return cartItems;
 }
 
+function buildCartItemsReceipt(cartItems) {
+  let receiptText = `***<没钱赚商店>收据***
+`;
 
+  for (let cartItem of cartItems.itemsReceipt) {
+    const name = cartItem.itemInfo.name;
+    const count = cartItem.count;
+    const unit = cartItem.itemInfo.unit;
+    const price = cartItem.itemInfo.price.toFixed(2);
+    const subtotal = cartItem.subtotal.toFixed(2);
+    receiptText += '名称：' + name + '，数量：' + count + unit + '，单价：' + price + '(元)，小计：' + subtotal + '(元)' + `
+`;
+  }
+  receiptText += `----------------------
+总计：` + cartItems.total.toFixed(2) + `(元)
+节省：` + cartItems.saveTotal.toFixed(2) + `(元)
+**********************`;
+
+  return receiptText;
+}
 
