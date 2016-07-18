@@ -87,8 +87,8 @@ describe('pos', () => {
     describe('test : subtotalItem function', ()=> {
       let items;
 
-      beforeEach(()=>{
-        items=[
+      beforeEach(()=> {
+        items = items = [
           {
             itemInfo: {
               barcode: 'ITEM000001',
@@ -116,14 +116,14 @@ describe('pos', () => {
             },
             count: 3
           }
-        ]
+        ];
       });
 
-      it('print cartItems',()=>{
+      it('print correct cartItems', ()=> {
         let cartItems = subtotalItem(items);
 
         const expectCartItems = {
-          itemsReceipt:[
+          itemsReceipt: [
             {
               itemInfo: {
                 barcode: 'ITEM000001',
@@ -132,7 +132,8 @@ describe('pos', () => {
                 price: 3.00
               },
               count: 5,
-              save:3.00
+              save: 3.00,
+              subtotal: 12.00
             },
             {
               itemInfo: {
@@ -142,7 +143,8 @@ describe('pos', () => {
                 price: 15.00
               },
               count: 2,
-              save:0
+              save: 0,
+              subtotal: 30.00
             },
             {
               itemInfo: {
@@ -152,11 +154,12 @@ describe('pos', () => {
                 price: 4.50
               },
               count: 3,
-              save:4.50
+              save: 4.50,
+              subtotal: 9.00
             }
           ],
-          total:51.00,
-          saveTotal:7.5
+          saveTotal: 7.50,
+          total: 51.00
         };
 
         expect(cartItems).toEqual(expectCartItems);
