@@ -5,6 +5,7 @@ describe('pos', () => {
 
     describe('test : buildItems function', ()=> {
       let tags;
+      const allItems = loadAllItems();
 
       beforeEach(() => {
         tags = [
@@ -21,7 +22,7 @@ describe('pos', () => {
       });
 
       it('print items1', () => {
-        let items = buildItems(['ITEM000001', 'ITEM000001-2', 'ITEM000005']);
+        let items = buildItems(['ITEM000001', 'ITEM000001-2', 'ITEM000005'],allItems);
 
         const expectItems = [
           {
@@ -48,7 +49,7 @@ describe('pos', () => {
       });
 
       it('print items2', () => {
-        let items = buildItems(tags);
+        let items = buildItems(tags,allItems);
 
         const expectItems = [
           {
@@ -86,6 +87,7 @@ describe('pos', () => {
 
     describe('test : subtotalItem function', ()=> {
       let items;
+      const promotionsBarcode = loadPromotions()[0].barcodes;
 
       beforeEach(()=> {
         items = items = [
@@ -120,7 +122,7 @@ describe('pos', () => {
       });
 
       it('print correct cartItems', ()=> {
-        let cartItems = subtotalItem(items);
+        let cartItems = subtotalItem(items,promotionsBarcode);
 
         const expectCartItems = {
           itemsReceipt: [

@@ -1,6 +1,14 @@
 'use strict';
 
-function buildItems(tags) {
+function printReceipt(tags) {
+  const allItems = loadAllItems();
+  const items = buildItems(tags,allItems);
+  const promotionsBarcode = loadPromotions()[0].barcodes;
+  const cartItems = subtotalItem(items,promotionsBarcode);
+  const receiptText = buildCartItemsReceipt(cartItems);
+  console.log(receiptText);
+}
+function buildItems(tags,allItems) {
   let items = [];
 
   for (let tag of tags) {
@@ -13,7 +21,6 @@ function buildItems(tags) {
       exitItem.count += count;
     }
     else {
-      const allItems = loadAllItems();
       const item = allItems.find(aItem=>aItem.barcode === barcode);
       items.push({itemInfo: item, count: count});
     }
@@ -22,11 +29,10 @@ function buildItems(tags) {
   return items;
 }
 
-function subtotalItem(items) {
+function subtotalItem(items,promotionsBarcode) {
   let cartItems = {itemsReceipt: items, total: 0.00, saveTotal: 0.00};
 
   for (let cartItem of cartItems.itemsReceipt) {
-    const promotionsBarcode = loadPromotions()[0].barcodes;
     const barcode = cartItem.itemInfo.barcode;
 
     const havePromotion = promotionsBarcode.find(promotionBarcode=>promotionBarcode === barcode);
