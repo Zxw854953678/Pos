@@ -87,7 +87,7 @@ describe('pos', () => {
 
     describe('test : subtotalCartItem function', ()=> {
       let items;
-      const promotions = loadPromotions()[0].barcodes;
+      const promotions = loadPromotions();
 
       beforeEach(()=> {
           items = [
@@ -123,7 +123,7 @@ describe('pos', () => {
       );
 
       it('print cartItems', () => {
-        let cartItems = subtotalCartItem(items,promotions);
+        let cartItems = subtotalCartItem(items, promotions);
 
         const expectCartitems = {
           itemsReceipt: [
