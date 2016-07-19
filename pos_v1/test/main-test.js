@@ -22,7 +22,7 @@ describe('pos', () => {
       });
 
       it('print items1', () => {
-        let items = buildItems(['ITEM000001', 'ITEM000001-2', 'ITEM000005'],allItems);
+        let items = buildItems(['ITEM000001', 'ITEM000001-2', 'ITEM000005'], allItems);
 
         const expectItems = [
           {
@@ -49,7 +49,7 @@ describe('pos', () => {
       });
 
       it('print items2', () => {
-        let items = buildItems(tags,allItems);
+        let items = buildItems(tags, allItems);
 
         const expectItems = [
           {
@@ -85,46 +85,47 @@ describe('pos', () => {
       });
     });
 
-    describe('test : subtotalItem function', ()=> {
+    describe('test : subtotalCartItem function', ()=> {
       let items;
-      const promotionsBarcode = loadPromotions()[0].barcodes;
+      const promotions = loadPromotions()[0].barcodes;
 
       beforeEach(()=> {
-        items = items = [
-          {
-            itemInfo: {
-              barcode: 'ITEM000001',
-              name: '雪碧',
-              unit: '瓶',
-              price: 3.00
+          items = [
+            {
+              itemInfo: {
+                barcode: 'ITEM000001',
+                name: '雪碧',
+                unit: '瓶',
+                price: 3.00
+              },
+              count: 5
             },
-            count: 5
-          },
-          {
-            itemInfo: {
-              barcode: 'ITEM000003',
-              name: '荔枝',
-              unit: '斤',
-              price: 15.00
+            {
+              itemInfo: {
+                barcode: 'ITEM000003',
+                name: '荔枝',
+                unit: '斤',
+                price: 15.00
+              },
+              count: 2
             },
-            count: 2
-          },
-          {
-            itemInfo: {
-              barcode: 'ITEM000005',
-              name: '方便面',
-              unit: '袋',
-              price: 4.50
-            },
-            count: 3
-          }
-        ];
-      });
+            {
+              itemInfo: {
+                barcode: 'ITEM000005',
+                name: '方便面',
+                unit: '袋',
+                price: 4.50
+              },
+              count: 3
+            }
+          ]
+        }
+      );
 
-      it('print correct cartItems', ()=> {
-        let cartItems = subtotalItem(items,promotionsBarcode);
+      it('print cartItems', () => {
+        let cartItems = subtotalCartItem(items,promotions);
 
-        const expectCartItems = {
+        const expectCartitems = {
           itemsReceipt: [
             {
               itemInfo: {
@@ -164,14 +165,14 @@ describe('pos', () => {
           total: 51.00
         };
 
-        expect(cartItems).toEqual(expectCartItems);
-      });
+        expect(cartItems).toEqual(expectCartitems);
+      })
     });
 
-    describe('test : buildCartItemsReceipt function',()=>{
+    describe('test : buildCartItemsReceipt function', ()=> {
       let cartItems;
 
-      beforeEach(()=>{
+      beforeEach(()=> {
         cartItems = {
           itemsReceipt: [
             {
@@ -213,7 +214,7 @@ describe('pos', () => {
         };
       });
 
-      it('print cartItemsText',()=>{
+      it('print cartItemsText', ()=> {
         let cartItemsText = buildCartItemsReceipt(cartItems);
 
         const expectCartItemsText = `***<没钱赚商店>收据***
