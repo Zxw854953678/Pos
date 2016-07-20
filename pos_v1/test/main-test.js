@@ -123,90 +123,158 @@ describe('pos', () => {
       );
 
       it('print cartItems', () => {
-        let cartItems = subtotalCartItem(items, promotions);
+        let cartItems = subtotalCartItems(items, promotions);
 
-        const expectCartitems = {
-          itemsReceipt: [
-            {
+        const expectCartItems = [
+          {
+            cartItem: {
               itemInfo: {
                 barcode: 'ITEM000001',
                 name: '雪碧',
                 unit: '瓶',
                 price: 3.00
               },
-              count: 5,
-              save: 3.00,
-              subtotal: 12.00
+              count: 5
             },
-            {
+            subtotal: 12.00,
+            save: 3.00
+          },
+          {
+            cartItem: {
               itemInfo: {
                 barcode: 'ITEM000003',
                 name: '荔枝',
                 unit: '斤',
                 price: 15.00
               },
-              count: 2,
-              save: 0,
-              subtotal: 30.00
+              count: 2
             },
-            {
+            subtotal: 30.00,
+            save: 0
+          },
+          {
+            cartItem: {
               itemInfo: {
                 barcode: 'ITEM000005',
                 name: '方便面',
                 unit: '袋',
                 price: 4.50
               },
-              count: 3,
-              save: 4.50,
-              subtotal: 9.00
-            }
-          ],
+              count: 3
+            },
+            subtotal: 9.00,
+            save: 4.50
+          }
+        ];
+
+        expect(cartItems).toEqual(expectCartItems);
+      })
+    });
+
+    describe('test : totalCartItems function', ()=> {
+      let cartItems;
+
+      beforeEach(()=> {
+        cartItems = [
+          {
+            cartItem: {
+              itemInfo: {
+                barcode: 'ITEM000001',
+                name: '雪碧',
+                unit: '瓶',
+                price: 3.00
+              },
+              count: 5
+            },
+            subtotal: 12.00,
+            save: 3.00
+          },
+          {
+            cartItem: {
+              itemInfo: {
+                barcode: 'ITEM000003',
+                name: '荔枝',
+                unit: '斤',
+                price: 15.00
+              },
+              count: 2
+            },
+            subtotal: 30.00,
+            save: 0
+          },
+          {
+            cartItem: {
+              itemInfo: {
+                barcode: 'ITEM000005',
+                name: '方便面',
+                unit: '袋',
+                price: 4.50
+              },
+              count: 3
+            },
+            subtotal: 9.00,
+            save: 4.50
+          }
+        ];
+      });
+
+      it('print receipt total', ()=> {
+        let cartItemsTotal = totalCartItems(cartItems);
+
+        const expectTotal = {
+          cartItems: cartItems,
           saveTotal: 7.50,
           total: 51.00
         };
 
-        expect(cartItems).toEqual(expectCartitems);
+        expect(cartItemsTotal).toEqual(expectTotal);
       })
     });
 
     describe('test : buildCartItemsReceipt function', ()=> {
-      let cartItems;
+      let cartItemsReceipt;
 
       beforeEach(()=> {
-        cartItems = {
-          itemsReceipt: [
+        cartItemsReceipt = {
+          cartItems: [
             {
-              itemInfo: {
-                barcode: 'ITEM000001',
-                name: '雪碧',
-                unit: '瓶',
-                price: 3.00
+              cartItem: {
+                itemInfo: {
+                  barcode: 'ITEM000001',
+                  name: '雪碧',
+                  unit: '瓶',
+                  price: 3.00
+                },
+                count: 5
               },
-              count: 5,
-              save: 3.00,
-              subtotal: 12.00
+              subtotal: 12.00,
+              save: 3.00
             },
             {
-              itemInfo: {
-                barcode: 'ITEM000003',
-                name: '荔枝',
-                unit: '斤',
-                price: 15.00
+              cartItem: {
+                itemInfo: {
+                  barcode: 'ITEM000003',
+                  name: '荔枝',
+                  unit: '斤',
+                  price: 15.00
+                },
+                count: 2
               },
-              count: 2,
-              save: 0,
-              subtotal: 30.00
+              subtotal: 30.00,
+              save: 0
             },
             {
-              itemInfo: {
-                barcode: 'ITEM000005',
-                name: '方便面',
-                unit: '袋',
-                price: 4.50
+              cartItem: {
+                itemInfo: {
+                  barcode: 'ITEM000005',
+                  name: '方便面',
+                  unit: '袋',
+                  price: 4.50
+                },
+                count: 3
               },
-              count: 3,
-              save: 4.50,
-              subtotal: 9.00
+              subtotal: 9.00,
+              save: 4.50
             }
           ],
           saveTotal: 7.50,
@@ -215,7 +283,7 @@ describe('pos', () => {
       });
 
       it('print cartItemsText', ()=> {
-        let cartItemsText = buildCartItemsReceipt(cartItems);
+        let cartItemsText = buildCartItemsReceipt(cartItemsReceipt);
 
         const expectCartItemsText = `***<没钱赚商店>收据***
 名称：雪碧，数量：5瓶，单价：3.00(元)，小计：12.00(元)
@@ -227,7 +295,7 @@ describe('pos', () => {
 **********************`;
 
         expect(cartItemsText).toEqual(expectCartItemsText);
-      })
+      });
     });
   });
 
